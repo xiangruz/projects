@@ -1,6 +1,6 @@
 '''
 
-Core code extracted from the code used in our following paper
+Prelimary code extracted from the code developed for our following paper
 
 Zeng X, Leung M, Zeev-Ben-Mordehai T, Xu M. A convolutional autoencoder approach for mining features in cellular electron cryo-tomograms and weakly supervised coarse segmentation. 2017. Preprint: arXiv:1706.04970
 
