@@ -1,5 +1,5 @@
 '''
-Core code extracted from the code used from our following paper
+Prelimary code extracted from the code developed for our following paper
 
 Xu M, Chai X, Muthakana H, Liang X, Yang G, Zeev-Ben-Mordehai T, Xing E. Deep learning based subdivision approach for large scale macromolecules structure recovery from electron cryo tomograms. Preprint: arXiv:1701.08404.  ISMB 2017 (acceptance rate 16%), Bioinformatics doi:10.1093/bioinformatics/btx230 
 
