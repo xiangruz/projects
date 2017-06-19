@@ -5,7 +5,7 @@ Xu M, Chai X, Muthakana H, Liang X, Yang G, Zeev-Ben-Mordehai T, Xing E. Deep le
 
 The current version of this code is mainly for experienced programmers for inspection purpose. It is subject for further updatess to be made more friendly to end users.
 
-Please cite the paper when this code is being used or adapted for your research publication.
+Please cite the paper when this code is used or adapted for your research publication.
 
 License: GPLv3
 
