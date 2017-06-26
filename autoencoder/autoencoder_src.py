@@ -160,7 +160,7 @@ def encoder_simple_conv(img_shape, encoding_dim=32, NUM_CHANNELS=1):
 
 
 
-def encoder_simple_conv_test(d, out_dir, clus_num_max = 50, gpu_count=1):
+def encoder_simple_conv_test(d, out_dir):
     
     x_keys = [_ for _ in d['vs'] if d['vs'][_]['v'] is not None]
     x_train = [N.expand_dims(d['vs'][_]['v'], -1) for _ in x_keys]
@@ -179,11 +179,7 @@ def encoder_simple_conv_test(d, out_dir, clus_num_max = 50, gpu_count=1):
         enc = encoder_simple_conv(img_shape=d['v_siz'])
         autoencoder = enc['autoencoder']
 
-        import tomominer.deep.keras.multi_gpu as TDKM
-        if gpu_count > 1:
-            autoencoder_p = TDKM.make_parallel(autoencoder, gpu_count=gpu_count)
-        else:
-            autoencoder_p = autoencoder
+        autoencoder_p = autoencoder
 
         from keras.optimizers import SGD, Adam
         adam = Adam(lr=0.001, beta_1=0.9)        # choose a proper lr to control convergance speed, and val_loss
