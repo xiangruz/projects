@@ -243,6 +243,21 @@ def decode_all_images(d, data_dir):
     pickle.dump(vs_p, op_join(out_dir, 'decoded.pickle'))
 
 
+def decode_images(autoencoder, vs):
+    vs_k = vs.keys()
+    vs_siz = vs[vs_k[0]].shape
+
+    import numpy as N
+    vs_t = [vs[_] for _ in vs_k]
+    vs_t = [N.expand_dims(_, -1) for _ in vs_t]
+    vs_t = N.array(vs_t)
+
+    vs_p = autoencoder.predict(vs_t)
+    vs_p = [_.reshape(vs_siz) for _ in vs_p]
+    vs_p = {vs_k[_]:vs_p[_] for _ in range(len(vs_k))}
+
+    return vs_p
+
 
 def conv_block(x, nb_filter, nb0, nb1, nb2, border_mode='same', subsample=(1, 1, 1), bias=True, batch_norm=False):
     from keras.layers import Input, Dense, Convolution3D, MaxPooling3D, UpSampling3D, Reshape, Flatten, Activation
