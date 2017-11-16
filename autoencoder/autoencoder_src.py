@@ -1,20 +1,14 @@
 '''
+Authors of the code: Xiangrui Zeng, Min Xu
+License: GPLv3
 
-Prelimary code extracted from the code developed for our following paper
+Reference:
 
 Zeng X, Leung M, Zeev-Ben-Mordehai T, Xu M. A convolutional autoencoder approach for mining features in cellular electron cryo-tomograms and weakly supervised coarse segmentation. 2017. Preprint: arXiv:1706.04970
 
-Authors of the code: Xiangrui Zeng, Min Xu
-
-The current version of this code is mainly for experienced programmers for inspection purpose. It is subject for further updatess to be made more friendly to end users.
-
 Please cite the above paper when this code is used or adapted for your research.
 
-License: GPLv3
-
 '''
-
-
 
 '''
 #Autoencoder3D
@@ -160,7 +154,7 @@ def encoder_simple_conv(img_shape, encoding_dim=32, NUM_CHANNELS=1):
 
 
 
-def encoder_simple_conv_test(d, out_dir):
+def encoder_simple_conv_test(d, out_dir, clus_num_max = 50, gpu_count=1):
     
     x_keys = [_ for _ in d['vs'] if d['vs'][_]['v'] is not None]
     x_train = [N.expand_dims(d['vs'][_]['v'], -1) for _ in x_keys]
@@ -179,7 +173,11 @@ def encoder_simple_conv_test(d, out_dir):
         enc = encoder_simple_conv(img_shape=d['v_siz'])
         autoencoder = enc['autoencoder']
 
-        autoencoder_p = autoencoder
+        import tomominer.deep.keras.multi_gpu as TDKM
+        if gpu_count > 1:
+            autoencoder_p = TDKM.make_parallel(autoencoder, gpu_count=gpu_count)
+        else:
+            autoencoder_p = autoencoder
 
         from keras.optimizers import SGD, Adam
         adam = Adam(lr=0.001, beta_1=0.9)        # choose a proper lr to control convergance speed, and val_loss
@@ -242,21 +240,6 @@ def decode_all_images(d, data_dir):
 
     pickle.dump(vs_p, op_join(out_dir, 'decoded.pickle'))
 
-
-def decode_images(autoencoder, vs):
-    vs_k = vs.keys()
-    vs_siz = vs[vs_k[0]].shape
-
-    import numpy as N
-    vs_t = [vs[_] for _ in vs_k]
-    vs_t = [N.expand_dims(_, -1) for _ in vs_t]
-    vs_t = N.array(vs_t)
-
-    vs_p = autoencoder.predict(vs_t)
-    vs_p = [_.reshape(vs_siz) for _ in vs_p]
-    vs_p = {vs_k[_]:vs_p[_] for _ in range(len(vs_k))}
-
-    return vs_p
 
 
 def conv_block(x, nb_filter, nb0, nb1, nb2, border_mode='same', subsample=(1, 1, 1), bias=True, batch_norm=False):
