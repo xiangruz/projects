@@ -15,7 +15,7 @@ scipy
 
 
 
-Installation: git clone ...
+Installation: git clone https://github.com/xulabs/projects.git
 
 
 
@@ -48,7 +48,10 @@ Output:
 
 
 
-Example usage: python autoencoder.py example/images.pickle example/tomogram.rec True 100
+Example command: 
+
+cd autoencoder
+python autoencoder.py example/images.pickle example/tomogram.rec True 100
 
 
 
